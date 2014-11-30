@@ -35,7 +35,8 @@
         logout: logout,
         getAppId: getAppId,
         getEvent: getEvent,
-        getLoginStatus: getLoginStatus
+        getLoginStatus: getLoginStatus,
+        getMe: getMe
       };
 
       return service;
@@ -125,6 +126,21 @@
 
           return deferred.promise;
         }
+      }
+
+      function getMe() {
+        var deferred = $q.defer();
+
+        FB.api('/me', function (response) {
+          if (response.error) {
+            deferred.reject(response.error);
+            return;
+          }
+
+          deferred.resolve(response);
+        });
+
+        return deferred.promise;
       }
     }
   }

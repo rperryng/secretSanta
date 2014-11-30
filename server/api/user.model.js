@@ -6,8 +6,10 @@ var userSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  matchedUserId: {
+  matchUserId: {
     type: Number,
     required: true
   }
 });
+
+module.exports = mongoose.model('User', userSchema);

@@ -23,6 +23,9 @@
   <header ng-show="app.showNavBar">
     <nav class="navbar">
       <ul class="list-navbar">
+        <li ng-show="app.navBarTitle">
+          {{app.navBarTitle}}
+        </li>
         <li>
           <a ng-click="app.logout()">Logout</a>
         </li>

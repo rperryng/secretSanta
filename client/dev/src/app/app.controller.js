@@ -10,10 +10,12 @@
     var vm = this;
 
     vm.showNavBar = false;
+    vm.navBarTitle = '';
     vm.logout = logout;
 
     var unbindFacebookReadyListener = $scope.$on('facebookReady', onFacebookReady);
     $scope.$on('loginChanged', onLoginChanged);
+    $scope.$on('titleChanged', onTitleChanged);
 
     //////////
 
@@ -34,8 +36,12 @@
         });
     }
 
-    function onLoginChanged(isLoggedIn) {
+    function onLoginChanged(event, isLoggedIn) {
       vm.showNavBar = isLoggedIn;
+    }
+
+    function onTitleChanged(event, title) {
+      vm.navBarTitle = title;
     }
   }
 })();

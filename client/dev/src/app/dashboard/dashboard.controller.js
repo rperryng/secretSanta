@@ -6,8 +6,10 @@
     .controller('DashboardController', DashboardController);
 
   /* @ngInject */
-  function DashboardController(facebook, facebookEventId) {
+  function DashboardController($rootScope, facebook, facebookEventId) {
     var vm = this;
+
+    vm.event = undefined;
 
     activate();
 
@@ -16,7 +18,8 @@
     function activate() {
       facebook.getEvent(facebookEventId)
         .then(function (event) {
-          console.log('got event', event);
+          $rootScope.$broadcast('titleChanged', event.name);
+          vm.event = event;
         });
     }
   }

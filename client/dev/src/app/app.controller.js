@@ -15,10 +15,8 @@
     function onFacebookReady() {
       facebook.getLoginStatus()
         .then(function (isLoggedIn) {
-          if (!isLoggedIn) {
-            $state.go('login');
-          }
-          console.log('user logged in:', isLoggedIn);
+          var nextState = isLoggedIn ? 'dashboard' : 'login';
+          $state.go(nextState);
         });
     }
   }

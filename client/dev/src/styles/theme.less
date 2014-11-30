@@ -1,7 +1,5 @@
-@import "./fonts.less";
- #wrapper {
-  margin: 16px;
-}
+@import (reference) "./fonts.less";
+
 h1,
 h2,
 h3,
@@ -12,15 +10,52 @@ button,
 input,
 optgroup,
 select,
+span,
 textarea,
 p {
-  font-family: @font-main;
+  .font-main;
 }
-.title {
-  text-align: @font-main;
+header {
+  .font-main;
+  background-image: linear-gradient(to bottom, rgba(20, 20, 20, .7) 0%, rgba(20, 20, 20, .5) 90%, rgba(0, 0, 0, 0) 100%);
+  height: 60px;
+  line-height: 60px;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.navbar {
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 960px;
+  vertical-align: middle;
+}
+.list-navbar {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  & > li {
+    display: inline-block;
+    vertical-align: middle;
+    list-style: none;
+  }
+  li:last-child {
+    float: right;
+  }
+}
+.wrapper {
+  max-width: 960px;
+  margin: 48px auto 0;
+  padding: 16px;
+}
+.bg-main {
+  background: url("/resources/assets/images/background_main_blur.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 .btn {
-  font-family: 'Montserras', 'Roboto', sans-serif;
+  .font-main;
   border: 1px solid black;
   border-radius: 3px;
   background-color: gray;

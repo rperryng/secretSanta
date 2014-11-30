@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
 
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700|Montserrat:400,700">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700|Montserrat:400,700">
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/grids-min.css&pure/0.5.0/grids-responsive-min.css">
   <link rel="stylesheet" type="text/css" href="/resources/vendor/normalize.css">
   <link rel="stylesheet" type="text/css" href="/secretSanta/theme.css">
@@ -19,11 +19,18 @@
   <title>Secret Santa</title>
 </head>
 
-<body ng-app="secretSanta" ng-controller="AppController as app">
+<body class="bg-main" ng-app="secretSanta" ng-controller="AppController as app">
   <header>
+    <nav class="navbar">
+      <ul class="list-navbar">
+        <li>
+          <a ng-click="app.logout()">Logout</a>
+        </li>
+      </ul>
+    </nav>
   </header>
 
-  <main>
+  <main class="wrapper">
     <ui-view>
     </ui-view>
   </main>

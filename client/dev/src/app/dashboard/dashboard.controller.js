@@ -6,7 +6,7 @@
     .controller('DashboardController', DashboardController);
 
   /* @ngInject */
-  function DashboardController() {
+  function DashboardController(facebook, facebookEventId) {
     var vm = this;
 
     activate();
@@ -14,7 +14,10 @@
     //////////
 
     function activate() {
-      console.log('hello world');
+      facebook.getEvent(facebookEventId)
+        .then(function (event) {
+          console.log('got event', event);
+        });
     }
   }
 })();

@@ -31,8 +31,9 @@
     function $get($q) {
 
       var service = {
-        getAppId: getAppId,
         login: login,
+        getAppId: getAppId,
+        getEvent: getEvent,
         getLoginStatus: getLoginStatus
       };
 
@@ -45,8 +46,13 @@
       function login() {
         var deferred = $q.defer();
 
+        var permissions = 'user_events';
+
         FB.login(function (response) {
-          deferred.resolve(response.status === 'connected');
+          var isLoggedIn = (response.status === 'connected');
+          deferred.resolve(isLoggedIn);
+        }, {
+          scope: permissions
         });
 
         return deferred.promise;
@@ -65,6 +71,55 @@
         });
 
         return deferred.promise;
+      }
+
+      function getEvent(facebookEventId) {
+        var deferred = $q.defer();
+
+        var eventInfoPromise = _getEventInfo(facebookEventId);
+        var eventAttendingPromise = _getAttending(facebookEventId);
+        var promises = [eventInfoPromise, eventAttendingPromise];
+
+        $q.all(promises)
+          .then(function (data) {
+            var event = data[0];
+            event.attending = data[1];
+            deferred.resolve(event);
+          });
+
+        return deferred.promise;
+
+        function _getEventInfo(facebookEventId) {
+          var deferred = $q.defer();
+          var url = '/' + facebookEventId;
+
+          FB.api(url, function (response) {
+            if (response.error) {
+              deferred.reject(response.error);
+              return;
+            }
+
+            deferred.resolve(response);
+          });
+
+          return deferred.promise;
+        }
+
+        function _getAttending(facebookEventId) {
+          var deferred = $q.defer();
+          var url = '/' + facebookEventId + '/attending';
+
+          FB.api(url, function (response) {
+            if (response.error) {
+              deferred.reject(response.error);
+              return;
+            }
+
+            deferred.resolve(response.data);
+          });
+
+          return deferred.promise;
+        }
       }
     }
   }

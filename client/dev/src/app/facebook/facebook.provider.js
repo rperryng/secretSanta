@@ -32,6 +32,7 @@
 
       var service = {
         login: login,
+        logout: logout,
         getAppId: getAppId,
         getEvent: getEvent,
         getLoginStatus: getLoginStatus
@@ -56,6 +57,10 @@
         });
 
         return deferred.promise;
+      }
+
+      function logout() {
+        FB.logout();
       }
 
       function getLoginStatus() {

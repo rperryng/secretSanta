@@ -8,11 +8,13 @@
   /* @ngInject */
   function AppController($scope, $state, facebook) {
 
-    $scope.$on('facebookReady', onFacebookReady);
+    var unbindFacebookReadyListener = $scope.$on('facebookReady', onFacebookReady);
 
     //////////
 
     function onFacebookReady() {
+      unbindFacebookReadyListener();
+
       facebook.getLoginStatus()
         .then(function (isLoggedIn) {
           var nextState = isLoggedIn ? 'dashboard' : 'login';

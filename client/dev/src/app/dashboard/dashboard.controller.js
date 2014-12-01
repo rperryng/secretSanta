@@ -11,6 +11,8 @@
 
     vm.user = undefined;
     vm.event = undefined;
+    vm.match = undefined;
+    vm.doneLoading = false;
     vm.setMatches = setMatches;
 
     activate();
@@ -38,9 +40,6 @@
             return $q.reject();
           }
 
-          $rootScope.$broadcast('titleChanged', event.name);
-          vm.event = event;
-
           return secretSantaFactory.getMatch(_user.id);
         })
         .then(function (response) {
@@ -52,7 +51,8 @@
         })
         .then(function (matchedUser) {
           _match = matchedUser;
-          _match.canGetFaceook = true;
+          _match.canGetFacebook = true;
+          return facebook.getUserPicture(matchedUser.id, 800);
         }, function () {
           // get match from attending list ...
           _event.attending.forEach(function (attendingUser) {
@@ -61,6 +61,10 @@
               _match.canGetFacebook = false;
             }
           });
+          return $q.reject();
+        })
+        .then(function (response) {
+          _match.pictureUrl = response;
         })
         .finally(function () {
           if (!_validUser) {
@@ -73,16 +77,18 @@
           console.log('event', _event);
           console.log('match', _match);
 
+          $rootScope.$broadcast('titleChanged', _event.name);
+
           vm.user = _user;
           vm.event = _event;
           vm.match = _match;
+          vm.doneLoading = true;
         });
     }
 
     function setMatches() {
       secretSantaFactory.setMatches(vm.event)
         .then(function (response) {
-          console.log('a rousing success');
           return secretSantaFactory.getMatch(vm.user.id);
         })
         .then(function (response) {

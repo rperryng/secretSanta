@@ -1,2 +1,14 @@
-<h2>{{dashboard.event.name}}</h2>
 <button class="btn" ng-click="dashboard.setMatches()">world</button>
+
+<div ng-show="!dashboard.match.canGetFacebook && dashboard.doneLoading">
+  <h3>You got matched with {{dashboard.match.name}}!</h3>
+
+  <p>Oops! I can't get the person's info for some reason... in the mean time check out their <a ng-href="https://facebook.com/{{dashboard.match.id}}">Facebook page</a>
+  </p>
+</div>
+
+<div class="u-centerText" ng-show="dashboard.match.canGetFacebook && dashboard.doneLoading">
+  <img class="match-picture" ng-src="{{dashboard.match.pictureUrl}}">
+  <h3>You got matched with {{dashboard.match.name}}!</h3>
+</div>
+

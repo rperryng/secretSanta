@@ -37,7 +37,8 @@
         getEvent: getEvent,
         getLoginStatus: getLoginStatus,
         getMe: getMe,
-        getUser: getUser
+        getUser: getUser,
+        getUserPicture: getUserPicture
       };
 
       return service;
@@ -155,6 +156,31 @@
           }
 
           deferred.resolve(response);
+        });
+
+        return deferred.promise;
+      }
+
+      function getUserPicture(facebookUserId, size) {
+        var deferred = $q.defer();
+
+        var url = '/' + facebookUserId + '/picture';
+        var params = {};
+
+        if (size) {
+          params = {
+            width: size,
+            height: size
+          };
+        }
+
+        FB.api(url, params, function (response) {
+          if (response.error) {
+            deferred.reject(response.error);
+            return;
+          }
+
+          deferred.resolve(response.data.url);
         });
 
         return deferred.promise;

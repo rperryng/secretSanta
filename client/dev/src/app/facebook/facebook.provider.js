@@ -36,7 +36,8 @@
         getAppId: getAppId,
         getEvent: getEvent,
         getLoginStatus: getLoginStatus,
-        getMe: getMe
+        getMe: getMe,
+        getUser: getUser
       };
 
       return service;
@@ -132,6 +133,22 @@
         var deferred = $q.defer();
 
         FB.api('/me', function (response) {
+          if (response.error) {
+            deferred.reject(response.error);
+            return;
+          }
+
+          deferred.resolve(response);
+        });
+
+        return deferred.promise;
+      }
+
+      function getUser(facebookUserId) {
+        var deferred = $q.defer();
+        var url = '/' + facebookUserId;
+
+        FB.api(url, function (response) {
           if (response.error) {
             deferred.reject(response.error);
             return;

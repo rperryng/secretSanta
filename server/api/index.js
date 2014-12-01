@@ -10,12 +10,12 @@ api.get('/api/users/:facebookUserId', function (req, res) {
     facebookUserId: facebookUserId
   };
 
-  User.find(match, '-_id facebookUserId matchUserId', function (err, result) {
+  User.find(match, '-_id matchUserId', function (err, result) {
     if (err) {
       res.sendStatus(500);
       return;
     }
 
-    res.status(200).json(result);
+    res.status(200).json(result[0]);
   });
 });

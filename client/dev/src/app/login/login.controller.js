@@ -16,7 +16,10 @@
     function login() {
       facebook.login()
         .then(function (isLoggedIn) {
-          $rootScope.$broadcast('loginChanged', isLoggedIn);
+          if (!isLoggedIn) {
+            return;
+          }
+          $rootScope.$broadcast('loginChanged', true);
           $state.go('dashboard');
         });
     }

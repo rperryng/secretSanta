@@ -38,7 +38,8 @@
         getLoginStatus: getLoginStatus,
         getMe: getMe,
         getUser: getUser,
-        getUserPicture: getUserPicture
+        getUserPicture: getUserPicture,
+        getUserLikes: getUserLikes
       };
 
       return service;
@@ -50,7 +51,7 @@
       function login() {
         var deferred = $q.defer();
 
-        var permissions = 'user_events';
+        var permissions = 'user_events, user_likes';
 
         FB.login(function (response) {
           var isLoggedIn = (response.status === 'connected');
@@ -181,6 +182,23 @@
           }
 
           deferred.resolve(response.data.url);
+        });
+
+        return deferred.promise;
+      }
+
+      function getUserLikes(facebookUserId) {
+        var deferred = $q.defer();
+
+        var url = '/' + facebookUserId + '/likes';
+
+        FB.api(url, function (response) {
+          if (response.error) {
+            deferred.reject(response.error);
+            return;
+          }
+
+          deferred.resolve(response);
         });
 
         return deferred.promise;

@@ -52,7 +52,7 @@
         .then(function (matchedUser) {
           _match = matchedUser;
           _match.canGetFacebook = true;
-          return facebook.getUserPicture(matchedUser.id, 800);
+          return facebook.getUserPicture(_match.id, 800);
         }, function () {
           // get match from attending list ...
           _event.attending.forEach(function (attendingUser) {
@@ -65,6 +65,11 @@
         })
         .then(function (response) {
           _match.pictureUrl = response;
+          return facebook.getUserLikes(_match.id);
+        })
+        .then(function (response) {
+          console.log('got response', response);
+          _match.likes = response.data;
         })
         .finally(function () {
           if (!_validUser) {

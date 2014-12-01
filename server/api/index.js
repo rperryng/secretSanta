@@ -19,3 +19,34 @@ api.get('/api/users/:facebookUserId', function (req, res) {
     res.status(200).json(result[0]);
   });
 });
+
+api.post('/api/users', function (req, res) {
+  console.log('got', req.body);
+
+  var users = req.body.attending;
+  var shuffled = shuffle(users);
+
+  var documents = shuffled.map(function (user, index, array) {
+    var nextUser = array[(index + 1) % array.length];
+    return {
+      facebookUserId: user.id,
+      matchUserId: nextUser.id
+    };
+  });
+
+  res.status(200).send(documents);
+});
+
+function shuffle(array) {
+  var remainingIds = array.length;
+
+  while (remainingIds) {
+    var randomIndex = Math.floor(Math.random() * remainingIds--);
+
+    var temp = array[remainingIds];
+    array[remainingIds] = array[randomIndex];
+    array[randomIndex] = temp;
+  }
+
+  return array;
+}

@@ -11,6 +11,7 @@
 
     vm.user = undefined;
     vm.event = undefined;
+    vm.setMatches = setMatches;
 
     activate();
 
@@ -71,6 +72,17 @@
           console.log('user', _user);
           console.log('event', _event);
           console.log('match', _match);
+
+          vm.user = _user;
+          vm.event = _event;
+          vm.match = _match;
+        });
+    }
+
+    function setMatches() {
+      secretSantaFactory.setMatches(vm.event)
+        .then(function (response) {
+          console.log('got response', response);
         });
     }
   }

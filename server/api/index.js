@@ -21,8 +21,6 @@ api.get('/api/users/:facebookUserId', function (req, res) {
 });
 
 api.post('/api/users', function (req, res) {
-  console.log('got', req.body);
-
   var users = req.body.attending;
   var shuffled = shuffle(users);
 
@@ -34,7 +32,14 @@ api.post('/api/users', function (req, res) {
     };
   });
 
-  res.status(200).send(documents);
+  User.create(documents, function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.sendStatus(200);
+  });
 });
 
 function shuffle(array) {

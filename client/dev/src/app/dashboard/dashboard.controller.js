@@ -82,6 +82,10 @@
     function setMatches() {
       secretSantaFactory.setMatches(vm.event)
         .then(function (response) {
+          console.log('a rousing success');
+          return secretSantaFactory.getMatch(vm.user.id);
+        })
+        .then(function (response) {
           console.log('got response', response);
         });
     }

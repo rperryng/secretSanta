@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
   },
   matchUserId: {
     type: Number,
-    required: true
+    required: true,
+    unique: false
   }
 });
 

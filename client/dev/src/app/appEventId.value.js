@@ -3,5 +3,5 @@
 
   angular
     .module('secretSanta')
-    .constant('facebookEventId', 1547826282100799);
+    .constant('facebookEventId', 935215639829577);
 })();

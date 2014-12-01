@@ -56,7 +56,7 @@
         }, function () {
           // get match from attending list ...
           _event.attending.forEach(function (attendingUser) {
-            if (attendingUser.id === _match.id.toString()) {
+            if (attendingUser.id === _match.id) {
               _match = attendingUser;
               _match.canGetFacebook = false;
             }

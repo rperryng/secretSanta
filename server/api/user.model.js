@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
   facebookUserId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true
   },
   matchUserId: {
-    type: Number,
+    type: String,
     required: true,
     unique: false
   }
